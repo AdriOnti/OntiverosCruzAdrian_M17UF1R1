@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 164869551}
   m_Layer: 8
   m_Name: Collectibles
-  m_TagString: Danger
+  m_TagString: Trinket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22863,11 +22863,47 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 684725974}
     m_Modifications:
+    - target: {fileID: 999117919442710835, guid: ed63d1dbb4eaedd469d4d084e182ba43,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.17938514
+      objectReference: {fileID: 0}
+    - target: {fileID: 999117919442710835, guid: ed63d1dbb4eaedd469d4d084e182ba43,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.29078948
+      objectReference: {fileID: 0}
+    - target: {fileID: 999117919442710835, guid: ed63d1dbb4eaedd469d4d084e182ba43,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -0.008548252
+      objectReference: {fileID: 0}
+    - target: {fileID: 999117919442710835, guid: ed63d1dbb4eaedd469d4d084e182ba43,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.017096102
+      objectReference: {fileID: 0}
+    - target: {fileID: 999117919442710835, guid: ed63d1dbb4eaedd469d4d084e182ba43,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 999117919442710835, guid: ed63d1dbb4eaedd469d4d084e182ba43,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.32
+      objectReference: {fileID: 0}
     - target: {fileID: 2175713901002640731, guid: ed63d1dbb4eaedd469d4d084e182ba43,
         type: 3}
       propertyPath: movementVector.x
       value: -8
       objectReference: {fileID: 0}
+    - target: {fileID: 2993715777789994449, guid: ed63d1dbb4eaedd469d4d084e182ba43,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1758015266, guid: 736b82997adc11d47b4377f9d02c019a,
+        type: 3}
     - target: {fileID: 5509904414680451990, guid: ed63d1dbb4eaedd469d4d084e182ba43,
         type: 3}
       propertyPath: m_RootOrder
@@ -22875,13 +22911,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5509904414680451990, guid: ed63d1dbb4eaedd469d4d084e182ba43,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5.2099
+      objectReference: {fileID: 0}
+    - target: {fileID: 5509904414680451990, guid: ed63d1dbb4eaedd469d4d084e182ba43,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5.2099
+      objectReference: {fileID: 0}
+    - target: {fileID: 5509904414680451990, guid: ed63d1dbb4eaedd469d4d084e182ba43,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.5
+      value: -35.14
       objectReference: {fileID: 0}
     - target: {fileID: 5509904414680451990, guid: ed63d1dbb4eaedd469d4d084e182ba43,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -50.7
+      value: -10.98
       objectReference: {fileID: 0}
     - target: {fileID: 5509904414680451990, guid: ed63d1dbb4eaedd469d4d084e182ba43,
         type: 3}
@@ -22927,6 +22973,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5509904415288877063, guid: ed63d1dbb4eaedd469d4d084e182ba43,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
