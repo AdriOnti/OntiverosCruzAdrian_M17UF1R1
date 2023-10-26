@@ -5,44 +5,44 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public int trinketsToVictory = 3;
+    public int keysToWin = 3;
     public GameObject activeCheckpoint;
-    public Text trinketCount;
-    public Text trinketText;
+    public Text keyCount;
+    public Text keyText;
 
-    private int trinketsCollected = 0;
+    private int keysCollected = 0;
 
- 
-    public void AddTrinket() 
+
+    public void AddKey()
     {
-        trinketsCollected++;
-        
-        // Comprobamos si hemos conseguido el objetivo.
-        if (CheckVictory() == false) 
-        { 
-            trinketCount.text = trinketsCollected.ToString();
+        keysCollected++;
+
+        // Comprobamos si hemos conseguido la llave y lo mostramos
+        if (CheckWin() == false)
+        {
+            keyCount.text = keysCollected.ToString();
         }
         else
         {
-            trinketCount.text = "";
-            trinketText.text = "All trinkets collected!";
+            keyCount.text = "";
+            keyText.text = "Llaves conseguidas!! Puerta Abierta";
         }
     }
 
-    private bool CheckVictory() 
+    private bool CheckWin()
     {
-        return (trinketsCollected == trinketsToVictory);
+        return (keysCollected == keysToWin);
     }
 
-    public void ActivateCheckpoint(GameObject newCheckpoint) 
+    public void ActivateCheckpoint(GameObject newCheckpoint)
     {
-        // Si había un checkpoint antiguo lo desactivamos.
+        // Quitar Checkpoint antiguo
         if (activeCheckpoint)
         {
             activeCheckpoint.GetComponent<Checkpoint>().Deactivate();
         }
 
-        // Marcamos el checkpoint como activo.
+        // Nuevo checkpoint en la puerta
         activeCheckpoint = newCheckpoint;
         activeCheckpoint.GetComponent<Checkpoint>().Activate();
     }
@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour
         //MoveCamera(newPosition);
     }
 
-    public void MoveCamera(Vector2 newPosition) 
+    public void MoveCamera(Vector2 newPosition)
     {
         Camera.main.transform.position = new Vector3(newPosition.x, newPosition.y, Camera.main.transform.position.z);
     }

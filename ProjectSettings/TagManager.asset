@@ -7,6 +7,7 @@ TagManager:
   - Danger
   - Transition
   - Trinket
+  - Keys
   layers:
   - Default
   - TransparentFX

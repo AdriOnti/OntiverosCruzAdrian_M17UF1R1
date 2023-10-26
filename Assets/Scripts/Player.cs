@@ -5,34 +5,18 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    // Public members
     public float speed;
     public float gravity;
     public float checkRadius;
-    public float waitOnDeath;
-    public bool isDebug;
+    //public bool isDebug;
     public GameController gameController;
-    public LayerMask whatIsGround;
+    public LayerMask layerGround;
     public GameObject spawnPoint;
-    
-    // Audio clips
-    public AudioClip jump;
-    public AudioClip death;
-    public AudioClip trinketOrCheckpoint;
-
-    // Components
     private Rigidbody2D rb;
-    private BoxCollider2D mCollider;
+    private BoxCollider2D playerCollider;
     private Animator playerAnimator;
-    private AudioSource audioSource;
-
-    // Public members
-    [HideInInspector]
-    public bool facingRight = true;
-    [HideInInspector]
-    public bool facingUp = true;
-
-    // Private members
+    public bool isRight = true;
+    public bool isUp = true;
     float moveInput;
     bool isGrounded = true;
     bool isDying = false;
@@ -40,21 +24,17 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        mCollider = GetComponent<BoxCollider2D>();
+        playerCollider = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        // Al pulsar la W o la S, solo si estamos en el suelo y estamos vivos
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S)) && isGrounded && !isDying)
+        // Cambiar gravedad al pulsar W/S/FlechaArriba/FlechaAbajo
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded && !isDying)
         {
-            audioSource.PlayOneShot(jump);
-
-            // Invertimos la gravedad y el sprite del personaje
             gravity = -gravity;
-            FlipVertically();
+            FlipY();
         }
     }
 
@@ -77,9 +57,9 @@ public class Player : MonoBehaviour
             }
 
             // Volteamos horizontalmente.
-            if ((facingRight == false && moveInput > 0) || (facingRight == true && moveInput < 0))
+            if ((isRight == false && moveInput > 0) || (isRight == true && moveInput < 0))
             {
-                FlipHorizontally();
+                FlipX();
             }
         }
     }
@@ -88,7 +68,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Danger"))
         {
-            StartCoroutine(ManageDeath());
+            StartCoroutine(Death());
         }
     }
 
@@ -97,145 +77,69 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Respawn"))
         {
             Checkpoint checkpoint = collision.gameObject.GetComponent<Checkpoint>();
-            
+
             // Comprobamos si el checkpoint está desactivado.
-            if(!checkpoint.isActive)
+            if (!checkpoint.isActive)
             {
-                // Reproducimos sonido y activamos el checkpoint
-                audioSource.PlayOneShot(trinketOrCheckpoint);
+                // Activamos el checkpoint
                 gameController.ActivateCheckpoint(collision.gameObject);
             }
         }
-        else if (collision.gameObject.CompareTag("Transition"))
+        else if (collision.gameObject.CompareTag("Keys"))
         {
-            ChangeRoom(collision.GetComponent<Transition>());
-        }
-        else if (collision.gameObject.CompareTag("Trinket"))
-        {
-            // Reproducimos sonido y eliminamos el Trinket
-            audioSource.PlayOneShot(trinketOrCheckpoint);
+            // Eliminamos el Trinket
             Destroy(collision.gameObject);
 
             // Añadimos el trinket al game controller
-            gameController.AddTrinket();
+            gameController.AddKey();
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Transition"))
-        {
-            ChangeRoom(collision.GetComponent<Transition>());
-        }
-    }
-
-    void ChangeRoom(Transition transition)
-    {
-        if (transition.verticalTransition)
-        {
-            if (facingUp)
-            {
-                Vector3 newCameraPos = new Vector3(transition.bottomRoom.position.x, transition.bottomRoom.position.y, Camera.main.transform.position.z);
-                gameController.MoveCamera(newCameraPos);
-            }
-            else
-            {
-                Vector3 newCameraPos = new Vector3(transition.topRoom.position.x, transition.topRoom.position.y, Camera.main.transform.position.z);
-                gameController.MoveCamera(newCameraPos);
-            }
-        }
-        else
-        {
-            if (facingRight)
-            {
-                Vector3 newCameraPos = new Vector3(transition.rightRoom.position.x, transition.rightRoom.position.y, Camera.main.transform.position.z);
-                gameController.MoveCamera(newCameraPos);
-            }
-            else
-            {
-                Vector3 newCameraPos = new Vector3(transition.leftRoom.position.x, transition.leftRoom.position.y, Camera.main.transform.position.z);
-                gameController.MoveCamera(newCameraPos);
-            }
-        }
-    }
 
     bool CheckIsGrounded()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(mCollider.bounds.center, mCollider.bounds.size, 0f, facingUp ? Vector2.down : Vector2.up, 0.1f, whatIsGround);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0f, isUp ? Vector2.down : Vector2.up, 0.1f, layerGround);
 
-        PaintDebugBox(raycastHit);
-        
         return raycastHit.collider != null;
     }
 
-    void PaintDebugBox(RaycastHit2D raycastHit)
+
+    // Cambiar sprite izquierda/derecha
+    void FlipX()
     {
-        if (isDebug)
-        {
-            Color rayColor;
-
-            if (raycastHit.collider != null)
-            {
-                rayColor = Color.green;
-            }
-            else
-            {
-                rayColor = Color.red;
-            }
-
-            Vector2 abajo = facingUp ? Vector2.down : Vector2.up;
-
-            Debug.DrawRay(mCollider.bounds.center + new Vector3(mCollider.bounds.extents.x, 0), abajo * (mCollider.bounds.extents.y + 0.1f), rayColor);
-            Debug.DrawRay(mCollider.bounds.center - new Vector3(mCollider.bounds.extents.x, 0), abajo * (mCollider.bounds.extents.y + 0.1f), rayColor);
-
-            if (facingUp)
-            {
-                Debug.DrawRay(mCollider.bounds.center - new Vector3(mCollider.bounds.extents.x, mCollider.bounds.extents.y + 0.1f), Vector3.right * (mCollider.bounds.size.y), rayColor);
-            }
-            else
-            {
-                Debug.DrawRay(mCollider.bounds.center + new Vector3(mCollider.bounds.extents.x, mCollider.bounds.extents.y + 0.1f), -Vector3.right * (mCollider.bounds.size.y), rayColor);
-            }
-
-            Debug.Log(raycastHit.collider);
-        }
+        isRight = !isRight;
+        Vector2 flipx = transform.localScale;
+        flipx.x *= -1;
+        transform.localScale = flipx;
     }
 
-    void FlipHorizontally()
+    // Cambiar sprite arriba/abajo
+    void FlipY()
     {
-        facingRight = !facingRight;
-        Vector2 Scaler = transform.localScale;
-        Scaler.x *= -1;
-        transform.localScale = Scaler;
+        isUp = !isUp;
+        Vector2 flipy = transform.localScale;
+        flipy.y *= -1;
+        transform.localScale = flipy;
     }
 
-    void FlipVertically()
-    {
-        facingUp = !facingUp;
-        Vector2 Scaler = transform.localScale;
-        Scaler.y *= -1;
-        transform.localScale = Scaler;
-    }
-
-    IEnumerator ManageDeath() 
+    IEnumerator Death()
     {
         isDying = true;
         playerAnimator.SetBool("isDying", true);
-        audioSource.PlayOneShot(death);
 
         // Desactivamos el rigidbody, para que no le afecten las físicas.
         rb.Sleep();
 
         // Esperamos unos segundos.
-        yield return new WaitForSeconds(waitOnDeath);
-        
+        yield return new WaitForSeconds(1);
+
         playerAnimator.SetBool("isDying", false);
 
         // Si estabamos boca abajo antes de morir
-        if (gravity > 0.0f) 
+        if (gravity > 0.0f)
         {
             // Reseteamos la gravedad y la dirección del personaje
-            FlipVertically();
+            FlipY();
             gravity *= -1;
         }
 
@@ -244,7 +148,7 @@ public class Player : MonoBehaviour
 
         // Pedimos al controlador del juego que mueva la cámara a la habitación de respawn
         gameController.MoveCameraToRespawn();
-        
+
         rb.WakeUp();
         isDying = false;
     }
