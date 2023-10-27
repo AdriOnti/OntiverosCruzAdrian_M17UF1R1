@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public int keysToWin = 3;
+    private int keysToWin = 3;
     public GameObject activeCheckpoint;
     public Text keyCount;
     public Text keyText;
@@ -16,7 +16,8 @@ public class GameController : MonoBehaviour
     public void AddKey()
     {
         keysCollected++;
-
+        Debug.Log(keysCollected);
+        Debug.Log(CheckWin());
         // Comprobamos si hemos conseguido la llave y lo mostramos
         if (CheckWin() == false)
         {
@@ -31,6 +32,8 @@ public class GameController : MonoBehaviour
 
     private bool CheckWin()
     {
+        Debug.Log(keysCollected);
+        Debug.Log(keysToWin);
         return (keysCollected == keysToWin);
     }
 

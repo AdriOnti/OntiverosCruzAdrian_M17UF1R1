@@ -21,8 +21,8 @@ public class Trinket : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //audioSource.PlayOneShot(collected);
-            Destroy(gameObject);
             gameController.AddKey();
+            Destroy(gameObject);
         }
     }
 }

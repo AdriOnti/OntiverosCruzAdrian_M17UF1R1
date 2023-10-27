@@ -87,10 +87,10 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Keys"))
         {
-            // Eliminamos el Trinket
+            // Eliminamos la llave
             Destroy(collision.gameObject);
 
-            // Añadimos el trinket al game controller
+            // Añadimos la llave al score con el game controller
             gameController.AddKey();
         }
     }
@@ -130,15 +130,14 @@ public class Player : MonoBehaviour
         // Desactivamos el rigidbody, para que no le afecten las físicas.
         rb.Sleep();
 
-        // Esperamos unos segundos.
+        // Esperamos un segundito
         yield return new WaitForSeconds(1);
 
         playerAnimator.SetBool("isDying", false);
 
-        // Si estabamos boca abajo antes de morir
+        // Si estabamos boca abajo antes de morir reseteamos la gravedad y la dirección del personaje
         if (gravity > 0.0f)
         {
-            // Reseteamos la gravedad y la dirección del personaje
             FlipY();
             gravity *= -1;
         }
