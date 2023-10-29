@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trinket : MonoBehaviour
+public class Keys : MonoBehaviour
 {
 
     public GameController gameController;
