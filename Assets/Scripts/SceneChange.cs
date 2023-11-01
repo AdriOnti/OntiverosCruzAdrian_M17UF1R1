@@ -8,6 +8,11 @@ public class SceneChange : MonoBehaviour
     public string loadLevel;
     void OnTriggerEnter(Collider other)
     {
+        LoadLevel();
+    }
+
+    public void LoadLevel()
+    {
         SceneManager.LoadScene(loadLevel);
     }
 }

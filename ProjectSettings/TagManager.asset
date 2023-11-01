@@ -4,10 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Danger
-  - Transition
-  - Trinket
   - Keys
+  - Enemies
   layers:
   - Default
   - TransparentFX

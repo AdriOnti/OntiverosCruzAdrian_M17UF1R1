@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Danger"))
+        if (collision.gameObject.CompareTag("Enemies"))
         {
             StartCoroutine(Death());
         }
@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Respawn"))
+        if (collision.gameObject.CompareTag("Checkpoint"))
         {
             Checkpoint checkpoint = collision.gameObject.GetComponent<Checkpoint>();
 
@@ -144,9 +144,6 @@ public class Player : MonoBehaviour
 
         // Movemos al jugador a la posición del checkpoint activo
         transform.position = gameController.activeCheckpoint.transform.position;
-
-        // Pedimos al controlador del juego que mueva la cámara a la habitación de respawn
-        gameController.MoveCameraToRespawn();
 
         rb.WakeUp();
         isDying = false;

@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public GameObject activeCheckpoint;
     public Text keyCount;
     public Text keyText;
+    public GameObject canvasWGameOver;
 
     private int keysCollected = 0;
 
@@ -27,6 +28,7 @@ public class GameController : MonoBehaviour
         {
             keyCount.text = "";
             keyText.text = "Llaves conseguidas!! Puerta Abierta";
+            canvasWGameOver.gameObject.SetActive(true);
         }
     }
 
@@ -50,12 +52,6 @@ public class GameController : MonoBehaviour
         activeCheckpoint.GetComponent<Checkpoint>().Activate();
     }
 
-    public void MoveCameraToRespawn()
-    {
-        // Damos por hecho que el respawn es hijo de una habitación.
-        //Vector2 newPosition = activeCheckpoint.transform.parent.transform.position;
-        //MoveCamera(newPosition);
-    }
 
     public void MoveCamera(Vector2 newPosition)
     {
