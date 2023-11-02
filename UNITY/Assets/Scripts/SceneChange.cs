@@ -21,6 +21,8 @@ public class SceneChange : MonoBehaviour
         
         if (other.gameObject.CompareTag("Player"))
         {
+            // Imposible que me funcionara el maldito dont destroy on load ;)
+
             //if (player != null)
             //{
             //    Debug.Log("p");
@@ -31,6 +33,7 @@ public class SceneChange : MonoBehaviour
         }
     }
 
+    // Carga nivel con espera de un segundo pa que se escuche el sonido de mario tuberias
     public void LoadLevel()
     {
         audioManager.PlayOneShot(tpSceneAudio);
@@ -39,6 +42,7 @@ public class SceneChange : MonoBehaviour
 
     IEnumerator WaitBeforeLoadLevel()
     {
+        // Manera bruta de comprobar si viene de una escena posterior (si quiere ir hacia atrás)
         if (isBakcSpwan)
         {
             Time.timeScale = 1.1f;

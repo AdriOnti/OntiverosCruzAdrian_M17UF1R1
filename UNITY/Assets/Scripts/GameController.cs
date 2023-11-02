@@ -16,9 +16,13 @@ public class GameController : MonoBehaviour
     public GameObject pauseMenu;
     private bool isPauseMenu = false;
     public Transform backSpawn;
+    public Transform spawn;
+    private AudioSource audioManager;
+    public AudioClip winsound;
 
     private void Start()
     {
+        audioManager = GetComponent<AudioSource>();
         CheckBackSpawn();
     }
 
@@ -45,9 +49,10 @@ public class GameController : MonoBehaviour
     {
         keysCollected++;
         Debug.Log(keysCollected);
-        Debug.Log(CheckWin());
-        // Comprobamos si hemos conseguido la llave y lo mostramos
-        if (CheckWin() == false)
+        Debug.Log(IsWin());
+
+        // Comprobamos si hemos conseguido 1 o todas las llaves
+        if (keysCollected != keysToWin)
         {
             keyCount.text = keysCollected.ToString();
         }
@@ -55,43 +60,43 @@ public class GameController : MonoBehaviour
         {
             keyCount.text = "";
             keyText.text = "Llaves conseguidas!! Puerta Abierta";
-            player.position = winSpawn.position;
+            player.gameObject.SetActive(false);
             spikes.gameObject.SetActive(false);
+            audioManager.PlayOneShot(winsound);
+            StartCoroutine(IsWin());
         }
     }
 
-    private bool CheckWin()
+    IEnumerator IsWin()
     {
-        Debug.Log(keysCollected);
-        Debug.Log(keysToWin);
-        return (keysCollected == keysToWin);
+        yield return new WaitForSeconds(4);
+        player.position = winSpawn.position;
+        player.gameObject.SetActive(true);
     }
 
     public void ActivateCheckpoint(GameObject newCheckpoint)
     {
-        // Quitar Checkpoint antiguo
+        // Quitar Checkpoint antiguo, spawn and backspawn
         if (activeCheckpoint)
         {
             activeCheckpoint.GetComponent<Checkpoint>().Deactivate();
+            backSpawn.gameObject.SetActive(false);
+            spawn.gameObject.SetActive(false);
         }
 
-        // Nuevo checkpoint en la puerta
+        // Nuevo checkpoint
         activeCheckpoint = newCheckpoint;
         activeCheckpoint.GetComponent<Checkpoint>().Activate();
     }
 
+    // Comprobamos si viene de una escena posterior (lo se es una manera bruta de hacerlo)
     void CheckBackSpawn()
     {
         if(Time.timeScale == 1.1f)
         {
+            backSpawn.gameObject.SetActive(true);
             player.position = backSpawn.position;
         }
         Time.timeScale = 1;
     }
-
-
-    //public void MoveCamera(Vector2 newPosition)
-    //{
-    //    Camera.main.transform.position = new Vector3(newPosition.x, newPosition.y, Camera.main.transform.position.z);
-    //}
 }

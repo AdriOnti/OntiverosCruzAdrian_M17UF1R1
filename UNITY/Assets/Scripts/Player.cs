@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Movimiento en FixedUpdate
     void FixedUpdate()
     {
         if (!isDying)
@@ -50,16 +51,15 @@ public class Player : MonoBehaviour
 
             rb.velocity = new Vector2(moveInput * speed, isGrounded ? 0.0f : gravity);
 
-            // Activamos la animación si es necesario.
             playerAnimator.SetBool("isWalking", false);
 
-            // Activamos la animación de caminar.
+            // Activamos la animación de caminar
             if (moveInput > 0.0f || moveInput < 0.0f)
             {
                 playerAnimator.SetBool("isWalking", true);
             }
 
-            // Volteamos horizontalmente.
+            // Volteamos horizontalmente
             if ((isRight == false && moveInput > 0) || (isRight == true && moveInput < 0))
             {
                 FlipX();
@@ -67,6 +67,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Si le da un objeto "Enemies" (tag) llamamos a Death
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemies"))
@@ -93,12 +94,12 @@ public class Player : MonoBehaviour
             // Eliminamos la llave
             Destroy(collision.gameObject);
 
-            // Añadimos la llave al score con el game controller
+            // Añadimos la llave al contador con el game controller
             gameController.AddKey();
         }
     }
 
-
+    // Primera vez q uso algo como esto a conciencia
     bool CheckIsGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0f, isUp ? Vector2.down : Vector2.up, 0.1f, layerGround);
@@ -147,13 +148,15 @@ public class Player : MonoBehaviour
             gravity *= -1;
         }
 
-        // Movemos al jugador a la posición del checkpoint activo
+        // Movemos al jugador al checkpoint activo
         transform.position = gameController.activeCheckpoint.transform.position;
 
         rb.WakeUp();
         playerCollider.enabled = true;
         isDying = false;
     }
+
+    // No habia manera de que fuese >:(
 
     //void Awake()
     //{

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Con ayuda de internet conseguí esto, que sirve no solo en "x" si no que en "y" también (incluso yendo en diagonal)
 [DisallowMultipleComponent]
 public class LoopMove : MonoBehaviour
 {

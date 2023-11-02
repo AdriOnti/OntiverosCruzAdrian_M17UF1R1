@@ -5,13 +5,8 @@ using UnityEngine;
 public class CameraFollowPlayer : MonoBehaviour
 {
     public Transform player;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
+    // Simple script, va siguiendo por cada frame al player
     void Update()
     {
         transform.position = new Vector3(player.position.x, player.position.y, player.position.z - 1f);

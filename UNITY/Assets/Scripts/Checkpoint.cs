@@ -8,6 +8,8 @@ public class Checkpoint : MonoBehaviour
     public Color activeColor;
 
     private SpriteRenderer spriteRenderer;
+
+    // Tenia curiosidad por usar esto
     [HideInInspector]
     public bool isActive;
 

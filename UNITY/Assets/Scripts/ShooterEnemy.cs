@@ -7,7 +7,8 @@ public class ShooterEnemy : MonoBehaviour
     public GameObject projectile;
     public Transform shootTarget;
 
-    public void FixedUpdate()
+    // Va habilitando y lanzando el proyectil en dirección al player
+    private void FixedUpdate()
     {
         Vector3 direccion = shootTarget.position - transform.position;
         transform.rotation = Quaternion.LookRotation(Vector3.forward, direccion);
