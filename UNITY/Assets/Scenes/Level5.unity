@@ -19675,7 +19675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -490, y: 400}
+  m_AnchoredPosition: {x: -250, y: 217.1}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1028956600
@@ -19752,6 +19752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadLevel: Level1
   tpSceneAudio: {fileID: 8300000, guid: d20612fc050516b429a1a806f15fdcd5, type: 3}
+  isBakcSpwan: 0
 --- !u!4 &1074909045
 Transform:
   m_ObjectHideFlags: 0
@@ -19999,6 +20000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadLevel: WGameOver
   tpSceneAudio: {fileID: 8300000, guid: d20612fc050516b429a1a806f15fdcd5, type: 3}
+  isBakcSpwan: 0
 --- !u!82 &1091860615
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21363,6 +21365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadLevel: Level4
   tpSceneAudio: {fileID: 8300000, guid: d20612fc050516b429a1a806f15fdcd5, type: 3}
+  isBakcSpwan: 1
 --- !u!82 &1621023429
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21605,8 +21608,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -625, y: 400}
-  m_SizeDelta: {x: 200, y: 30}
+  m_AnchoredPosition: {x: -332.02646, y: 185.28802}
+  m_SizeDelta: {x: 259.7212, y: 72.4939}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1682883938
 MonoBehaviour:
@@ -21621,7 +21624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.92719114, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

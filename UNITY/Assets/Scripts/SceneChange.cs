@@ -8,6 +8,7 @@ public class SceneChange : MonoBehaviour
     public string loadLevel;
     private AudioSource audioManager;
     public AudioClip tpSceneAudio;
+    public bool isBakcSpwan;
 
     void Start()
     {
@@ -38,7 +39,11 @@ public class SceneChange : MonoBehaviour
 
     IEnumerator WaitBeforeLoadLevel()
     {
-        Time.timeScale = 1;
+        if (isBakcSpwan)
+        {
+            Time.timeScale = 1.1f;
+        }
+        else Time.timeScale = 1;
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(loadLevel);
     }

@@ -15,6 +15,12 @@ public class GameController : MonoBehaviour
     private int keysCollected = 0;
     public GameObject pauseMenu;
     private bool isPauseMenu = false;
+    public Transform backSpawn;
+
+    private void Start()
+    {
+        CheckBackSpawn();
+    }
 
     private void Update()
     {
@@ -72,6 +78,15 @@ public class GameController : MonoBehaviour
         // Nuevo checkpoint en la puerta
         activeCheckpoint = newCheckpoint;
         activeCheckpoint.GetComponent<Checkpoint>().Activate();
+    }
+
+    void CheckBackSpawn()
+    {
+        if(Time.timeScale == 1.1f)
+        {
+            player.position = backSpawn.position;
+        }
+        Time.timeScale = 1;
     }
 
 
